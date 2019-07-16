@@ -5,8 +5,7 @@ using Dropbox.Api;
 using System.Linq;
 
 // Timer triggered Azure Function 
-// Using a declartive TokenStore Binding
-// Using MSI to get authentication token for Token Store access, but must specify full path to token 
+// Using MSI to get authentication token for Token Store access, but must specify full path to token (i.e. path to service and token name) 
 // Accessing dropbox files 
 
 public static class TestTokenStoreBinding_timer

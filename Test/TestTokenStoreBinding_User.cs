@@ -13,9 +13,9 @@ using System.Linq;
 using System.Collections.Generic;
 
 
-// Http triggered Azure Function 
-// Using an IMPERATIVE TokenStore Binding
-// Using MSI to get authentication token for Token Store access, using user identity to get specific token  
+// This is an Http triggered Azure Function 
+// MSI (the app's identity) is being used to get authentication token for Token Store access, the user's identity is used to get specific token  
+// Supply a url with the path only up to the service that the token will be retrieved from 
 // Accessing onedrive files 
 
 namespace TokenVaultFunction
