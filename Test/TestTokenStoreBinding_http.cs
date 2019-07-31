@@ -19,8 +19,8 @@ namespace Test
         [FunctionName("TestTokenStoreBinding_http")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log, [TokenStoreBinding(Token_url = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampleToken",
-            Auth_flag = "msi")] string outputToken)
+            ILogger log, [TokenStoreBinding(Token_url = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/newToken",
+            Auth_flag = "msi", Identity_provider = "facebook")] string outputToken) 
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
