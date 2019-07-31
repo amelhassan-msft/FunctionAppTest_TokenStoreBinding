@@ -1,0 +1,25 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "TokenStoreBinding",
+      "direction": "in",
+      "name": "TokenBindingOutput",
+      "Token_url": "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampleToken"
+    }
+  ]
+}
