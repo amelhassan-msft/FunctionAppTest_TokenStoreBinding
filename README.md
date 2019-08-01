@@ -11,7 +11,7 @@ Install the latest version.
 
 ### ~ JavaScript Azure Functions ~
 #### Using a command line tool, navigate to your project folder. Run the following commands to generate the extensions.csproj file. 
-- func extensions install -p Amel.TokenStoreBinding.Net -v 1.0.1
+- func extensions install -p Amel.TokenStoreBinding.Net -v 1.0.2
 - func extensions sync
 #### Other useful commands: 
 - dotnet restore
@@ -25,5 +25,6 @@ Install the latest version.
 		"direction": "in",
 		"name": "TokenBindingOutput",
 		"Token_url": "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampletoken",
-		"Auth_flag": "MSI"
+		"Auth_flag": "MSI",
+		"Identity_provider": "aad"
 	}
