@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Dropbox.Api;
 using System.Collections.Generic;
 using System.Linq;
-
 // Http triggered Azure Function 
 // Using MSI to get authentication token for Token Store access, but must specify full path to token (i.e. path to service and token name)  
 // Accessing dropbox files 

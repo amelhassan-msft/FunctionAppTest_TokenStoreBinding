@@ -1,29 +1,33 @@
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Dropbox.Api;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using Dropbox.Api;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
-using System;
-
-// Http triggered Azure Function 
-// Using MSI to get authentication token for Token Store access, but must specify full path to token (i.e. path to service and token name)  
-// Accessing dropbox files 
 
 namespace Test
 {
-    public static class TestTokenStoreBinding_http
+    public static class testarm
     {
-        [FunctionName("TestTokenStoreBinding_http")]
+        [FunctionName("testarm")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log, [TokenStoreBinding(Token_url = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/newToken",
-            Auth_flag = "msi", Identity_provider = "google")] string outputToken)
+            ILogger log, Binder binder) 
         {
+            var Token_url = Environment.GetEnvironmentVariable("Token_url_name");
+            // throw new InvalidOperationException($"The token url is: {Token_url}"); // as a check
+            
+            // An implicit binding is used here to access the Token_url param from app settings 
+            TokenStoreBindingAttribute attribute = new TokenStoreBindingAttribute(Token_url, "msi", "google"); // Initialize TokenStore Binding
+
+            var outputToken = await binder.BindAsync<string>(attribute);
+
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var filesList = new List<string>();

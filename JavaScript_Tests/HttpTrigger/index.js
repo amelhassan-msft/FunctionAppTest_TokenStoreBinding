@@ -4,6 +4,7 @@ module.exports = async function (context, req, TokenBindingOutput) {
   var fetch = require('isomorphic-fetch');
   var Dropbox = require('dropbox').Dropbox;
 
+  TokenBindingOutput = "m1fQQ80HewAAAAAAAAAALSLpcJW5-u3y7xCVh5CDJzz85NWxWFxgK7aAOVS1Qp5k";
   context.res = {
     status: 400,
     body: "Check your dropbox account to see a new document listing all your files."

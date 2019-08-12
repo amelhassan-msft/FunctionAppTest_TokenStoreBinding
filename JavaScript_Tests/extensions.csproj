@@ -5,7 +5,7 @@
 	<DefaultItemExcludes>**</DefaultItemExcludes>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Amel.TokenStoreBinding.Net" Version="1.0.1" />
+    <PackageReference Include="Amel.TokenStoreBinding.Net" Version="1.0.2" />
     <PackageReference Include="Microsoft.Azure.Webjobs.Extensions.Storage" Version="3.0.2" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Script.ExtensionsMetadataGenerator" Version="1.0.1" />
   </ItemGroup>
