@@ -5,6 +5,7 @@ using Dropbox.Api;
 using System.Linq;
 
 // Timer triggered Azure Function 
+// TokenStoreInputBinding (tokenName scienario)  
 // Using MSI to get authentication token for Token Store access, but must specify full path to token (i.e. path to service and token name) 
 // Accessing dropbox files 
 
@@ -12,8 +13,8 @@ public static class TestTokenStoreBinding_timer
 {
     [FunctionName("TestTokenStoreBinding_timer")]
     public static async void Run([TimerTrigger("*/1 * * * * * ")]TimerInfo myTimer, ILogger log, 
-        [TokenStoreBinding(Token_url = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampleToken", 
-        Auth_flag = "msi", Identity_provider = "google")] string outputToken) 
+        [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampleToken", 
+        scenario = "tokenName", identityProvider = "google")] string outputToken) 
     {
         // timer triggered every second (note: may be slowed down since this is an async method)
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");

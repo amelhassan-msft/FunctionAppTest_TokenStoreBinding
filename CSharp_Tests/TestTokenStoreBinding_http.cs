@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 
 // Http triggered Azure Function 
+// TokenStoreInputBinding (tokenName scienario)  
 // Using MSI to get authentication token for Token Store access, but must specify full path to token (i.e. path to service and token name)  
 // Accessing dropbox files 
 
@@ -21,8 +22,8 @@ namespace Test
         [FunctionName("TestTokenStoreBinding_http")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log, [TokenStoreBinding(Token_url = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/newToken",
-            Auth_flag = "msi", Identity_provider = "google")] string outputToken)
+            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/newToken",
+            scenario = "tokenName", identityProvider = "google")] string outputToken)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 

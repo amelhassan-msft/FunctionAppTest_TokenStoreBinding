@@ -14,7 +14,7 @@ using System.Collections.Generic;
 
 
 // This is an Http triggered Azure Function 
-// MSI (the app's identity) is being used to get authentication token for Token Store access, the user's identity is used to get specific token  
+// TokenStoreInputBinding (user scienario)  
 // Supply a url with the path only up to the service that the token will be retrieved from 
 // Accessing onedrive files 
 
@@ -25,7 +25,7 @@ namespace TokenVaultFunction
         [FunctionName("TestTokenStoreBinding_User")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log, [TokenStoreBinding(Token_url = "https://ameltokenstore.tokenstore.azure.net/services/microsoftgraph", Auth_flag = "user", Identity_provider = "google")] String outputToken) // had: Binder binder (for imperative binding) 
+            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/microsoftgraph", scenario = "user", identityProvider = "google")] String outputToken) // had: Binder binder (for imperative binding) 
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 

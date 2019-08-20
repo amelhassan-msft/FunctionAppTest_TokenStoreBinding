@@ -1,27 +1,36 @@
+using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Dropbox.Api;
+using Newtonsoft.Json;
 using System.Collections.Generic;
+using Dropbox.Api;
 using System.Linq;
-// Http triggered Azure Function
-// TokenStoreInputBinding (user scienario)  
-// Accessing dropbox files 
 
 namespace Test
 {
-    public static class TestTokenStoreBinding_User_Dropbox
+    public static class testimplicitcs
     {
-        [FunctionName("TestTokenStoreBinding_User_Dropbox")]
+        [FunctionName("testimplicitcs")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/dropbox",
-            scenario = "user", identityProvider = "google")] string outputToken)
+            ILogger log, Binder binder)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
+
+            // var Token_url = Environment.GetEnvironmentVariable("Token_url_name");
+            var Token_url = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampleToken";
+
+            // An implicit binding is used here to access the Token_service param from app settings 
+            TokenStoreInputBindingAttribute attribute = new TokenStoreInputBindingAttribute(Token_url, "tokenName", "aad"); // Initialize TokenStoreBinding
+
+            var outputToken = await binder.BindAsync<string>(attribute);
+
+            log.LogInformation($"The output token is: {outputToken}");
 
             var filesList = new List<string>();
 

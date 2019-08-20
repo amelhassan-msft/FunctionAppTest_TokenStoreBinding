@@ -24,7 +24,7 @@ namespace Test
             // throw new InvalidOperationException($"The token url is: {Token_url}"); // as a check
             
             // An implicit binding is used here to access the Token_url param from app settings 
-            TokenStoreBindingAttribute attribute = new TokenStoreBindingAttribute(Token_url, "msi", "google"); // Initialize TokenStore Binding
+            TokenStoreInputBindingAttribute attribute = new TokenStoreInputBindingAttribute(Token_url, "tokenName", "google"); // Initialize TokenStore Binding
 
             var outputToken = await binder.BindAsync<string>(attribute);
 

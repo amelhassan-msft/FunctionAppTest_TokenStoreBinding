@@ -21,7 +21,7 @@
     "direction": "in",
     "name": "TokenBindingOutput",
     "Token_url": "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampletoken",
-    "Auth_flag": "MSI", 
+    "Auth_flag": "msi", 
     "Identity_provider": "aad"
     }
     

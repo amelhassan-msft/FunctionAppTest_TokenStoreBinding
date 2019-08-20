@@ -4,16 +4,16 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="azurefunctions.tokenstore.extension.v1" Version="1.0.0" />
     <PackageReference Include="Dropbox.Api" Version="4.9.4" />
+    <PackageReference Include="Facebook" Version="7.0.6" />
+    <PackageReference Include="Google.Apis" Version="1.40.3" />
+    <PackageReference Include="Microsoft.AspNet.Facebook" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Graph" Version="1.16.0" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.29" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="TokenStoreBindingProject">
-      <HintPath>..\..\TokenStore_FunctionBinding\TokenStoreBindingProject\TokenStoreBindingProject\bin\Debug\netstandard2.0\bin\TokenStoreBindingProject.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Net.Facebook.Graph" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
