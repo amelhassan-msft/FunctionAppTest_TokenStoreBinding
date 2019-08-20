@@ -23,8 +23,8 @@ namespace Test
         [FunctionName("twoservices")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/dropbox",
-            scenario = "user", identityProvider = "google")] string dropboxToken, [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/microsoftgraph",
+            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://joetest.tokenstore.azure.net/services/dropbox",
+            scenario = "user", identityProvider = "google")] string dropboxToken, [TokenStoreInputBinding(tokenUrl = "https://joetest.tokenstore.azure.net/services/microsoftgraph",
             scenario = "user", identityProvider = "google")] string microsoftToken)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");

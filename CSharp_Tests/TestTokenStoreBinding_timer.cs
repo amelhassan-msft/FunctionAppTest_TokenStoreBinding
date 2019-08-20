@@ -13,7 +13,7 @@ public static class TestTokenStoreBinding_timer
 {
     [FunctionName("TestTokenStoreBinding_timer")]
     public static async void Run([TimerTrigger("*/1 * * * * * ")]TimerInfo myTimer, ILogger log, 
-        [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampleToken", 
+        [TokenStoreInputBinding(tokenUrl = "https://joetest.tokenstore.azure.net/services/dropbox/tokens/sampleToken", 
         scenario = "tokenName", identityProvider = "google")] string outputToken) 
     {
         // timer triggered every second (note: may be slowed down since this is an async method)

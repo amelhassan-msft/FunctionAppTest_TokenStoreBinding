@@ -18,7 +18,7 @@ namespace Test
         [FunctionName("TestTokenStoreBinding_User_Dropbox")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
-            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/dropbox",
+            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://joetest.tokenstore.azure.net/services/dropbox",
             scenario = "user", identityProvider = "google")] string outputToken)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");

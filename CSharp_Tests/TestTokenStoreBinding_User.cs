@@ -25,7 +25,7 @@ namespace TokenVaultFunction
         [FunctionName("TestTokenStoreBinding_User")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://ameltokenstore.tokenstore.azure.net/services/microsoftgraph", scenario = "user", identityProvider = "google")] String outputToken) // had: Binder binder (for imperative binding) 
+            ILogger log, [TokenStoreInputBinding(tokenUrl = "https://joetest.tokenstore.azure.net/services/microsoftgraph", scenario = "user", identityProvider = "google")] String outputToken) // had: Binder binder (for imperative binding) 
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 

@@ -23,7 +23,7 @@ namespace Test
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             // var Token_url = Environment.GetEnvironmentVariable("Token_url_name");
-            var Token_url = "https://ameltokenstore.tokenstore.azure.net/services/dropbox/tokens/sampleToken";
+            var Token_url = "https://joetest.tokenstore.azure.net/services/dropbox/tokens/sampleToken";
 
             // An implicit binding is used here to access the Token_service param from app settings 
             TokenStoreInputBindingAttribute attribute = new TokenStoreInputBindingAttribute(Token_url, "tokenName", "aad"); // Initialize TokenStoreBinding
