@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -6,69 +5,68 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Dropbox.Api;
-using System.Linq;
 using System.Collections.Generic;
 using Facebook;
-using System.Dynamic;
-using Microsoft.Graph;
-using System.Net.Http.Headers;
 using System.Text;
 
 namespace Test
 {
     public static class twoservices
     {
+        // This is an Http triggered Azure Function
+        // Two TokenStoreInputBindings are being used to get an access token for Dropbox and Facebook 
+        // The user scenario TokenStoreInputBinding is being used, users are prompted to login with their Google account 
+        // Does: User profile info is read using the Facebook api and this information is stored in a file that is uploaded to dropbox 
+
         [FunctionName("twoservices")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
             ILogger log, [TokenStoreInputBinding(tokenUrl = "https://joetest.tokenstore.azure.net/services/dropbox",
-            scenario = "user", identityProvider = "google")] string dropboxToken, [TokenStoreInputBinding(tokenUrl = "https://joetest.tokenstore.azure.net/services/microsoftgraph",
-            scenario = "user", identityProvider = "google")] string microsoftToken)
+            scenario = "user", identityProvider = "google")] string dropboxToken, [TokenStoreInputBinding(tokenUrl = "https://joetest.tokenstore.azure.net/services/facebook",
+            scenario = "user", identityProvider = "google")] string facebookToken)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             var filesList = new List<string>(); // store onedrive file
 
-            if (!string.IsNullOrEmpty(microsoftToken))
+            if (!string.IsNullOrEmpty(facebookToken))
             {
-                var graphClient = new GraphServiceClient(new DelegateAuthenticationProvider((requestMessage) =>
+                // Extract Facebook info and save it to a file in DropBox 
+                string fbName, fbEmail, fbBirthday, fbHometown;
+                try
                 {
-                    requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", microsoftToken);
-                    return Task.CompletedTask;
-                }));
-
-                var driveItems = await graphClient.Me.Drive.Root.Children.Request().GetAsync();
-                var driveItemNames = driveItems.Select(driveItem => driveItem.Name);
-
-                foreach (var driveitem in driveItemNames) // add drive item names to filesList 
+                    var fb = new FacebookClient(facebookToken);
+                    var result = (IDictionary<string, object>)fb.Get("/me?fields=name,birthday,email,hometown");
+                    fbName = (string)result["name"];
+                    fbEmail = (string)result["email"];
+                    fbBirthday = (string)result["birthday"];
+                    // Hometown 
+                    JsonObject townData = (JsonObject)result["hometown"];
+                    var test = townData["name"].ToString();
+                    fbHometown = test;
+                }
+                catch (FacebookOAuthException)
                 {
-                    filesList.Add(driveitem);
+                    return null;
                 }
 
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
-                foreach (var file in filesList)
-                {
-                    sb.Append(file);
-                }
-
+               // Upload facebook user info to a file in dropbox 
                 if (!string.IsNullOrEmpty(dropboxToken))
                 {
                     using (var dbx = new DropboxClient(dropboxToken))
                     {
                         var list = await dbx.Files.ListFolderAsync(string.Empty);
 
-                        byte[] byteArray = Encoding.ASCII.GetBytes($"Files: {sb.ToString()}");
+                        byte[] byteArray = Encoding.ASCII.GetBytes($"Facebook user info ... " + System.Environment.NewLine + $"Name: {fbName}, Email: {fbEmail}, Birthday: {fbBirthday}, Hometown: {fbHometown}"); // List files here 
                         MemoryStream stream = new MemoryStream(byteArray);
 
-                        var commit = new Dropbox.Api.Files.CommitInfo("/listonedrivefiles");
+                        var commit = new Dropbox.Api.Files.CommitInfo("/FacebookUserInfo");
                         await dbx.Files.UploadAsync(commit, stream);
                     }
                 }
             }
-         
-            return (ActionResult)new OkObjectResult($"Check your Dropbox account for a file \"listonedrivefiles\" to see a list of your OneDrive files");
+            return (ActionResult)new OkObjectResult($"Check your Dropbox account for a file \"FacebookUserInfo\" to see your saved Facebook profile information");
         }
     }
 }

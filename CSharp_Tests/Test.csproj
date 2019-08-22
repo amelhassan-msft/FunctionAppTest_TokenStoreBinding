@@ -4,7 +4,7 @@
     <AzureFunctionsVersion>v2</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="azurefunctions.tokenstore.extension.v1" Version="1.0.0" />
+    <PackageReference Include="azurefunctions.tokenstore.extension.v1" Version="1.0.1" />
     <PackageReference Include="Dropbox.Api" Version="4.9.4" />
     <PackageReference Include="Facebook" Version="7.0.6" />
     <PackageReference Include="Google.Apis" Version="1.40.3" />
